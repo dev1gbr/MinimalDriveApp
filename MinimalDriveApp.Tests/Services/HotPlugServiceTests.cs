@@ -1,29 +1,18 @@
 using MinimalDriveApp.Services;
+using Moq;
 
 namespace MinimalDriveApp.Tests.Services;
 
 public class HotPlugServiceTests
 {
-    private sealed class FakeHotPlugService : IHotPlugService
-    {
-        public event EventHandler<string>? DriveConnected;
-        public event EventHandler<string>? DriveDisconnected;
-
-        public void Start() { }
-        public void Dispose() { }
-
-        public void SimulateConnect(string serial) => DriveConnected?.Invoke(this, serial);
-        public void SimulateDisconnect(string serial) => DriveDisconnected?.Invoke(this, serial);
-    }
-
     [Fact]
     public void DriveConnected_RaisesEvent_WithSerialNumber()
     {
-        var svc = new FakeHotPlugService();
+        var mock = new Mock<IHotPlugService>();
         string? received = null;
-        svc.DriveConnected += (_, serial) => received = serial;
+        mock.Object.DriveConnected += (_, serial) => received = serial;
 
-        svc.SimulateConnect("SN-USB-001");
+        mock.Raise(m => m.DriveConnected += null, this, "SN-USB-001");
 
         Assert.Equal("SN-USB-001", received);
     }
@@ -31,11 +20,11 @@ public class HotPlugServiceTests
     [Fact]
     public void DriveDisconnected_RaisesEvent_WithSerialNumber()
     {
-        var svc = new FakeHotPlugService();
+        var mock = new Mock<IHotPlugService>();
         string? received = null;
-        svc.DriveDisconnected += (_, serial) => received = serial;
+        mock.Object.DriveDisconnected += (_, serial) => received = serial;
 
-        svc.SimulateDisconnect("SN-USB-001");
+        mock.Raise(m => m.DriveDisconnected += null, this, "SN-USB-001");
 
         Assert.Equal("SN-USB-001", received);
     }
@@ -43,27 +32,29 @@ public class HotPlugServiceTests
     [Fact]
     public void DriveConnected_DoesNotFire_WhenNoSubscribers()
     {
-        var svc = new FakeHotPlugService();
-        // should not throw
-        svc.SimulateConnect("SN-001");
+        var mock = new Mock<IHotPlugService>();
+
+        // should not throw when no subscribers
+        mock.Raise(m => m.DriveConnected += null, this, "SN-001");
     }
 
     [Fact]
     public void DriveDisconnected_DoesNotFire_WhenNoSubscribers()
     {
-        var svc = new FakeHotPlugService();
-        svc.SimulateDisconnect("SN-001");
+        var mock = new Mock<IHotPlugService>();
+
+        mock.Raise(m => m.DriveDisconnected += null, this, "SN-001");
     }
 
     [Fact]
     public void MultipleSubscribers_AllReceiveEvent()
     {
-        var svc = new FakeHotPlugService();
+        var mock = new Mock<IHotPlugService>();
         var results = new List<string>();
-        svc.DriveConnected += (_, s) => results.Add("A:" + s);
-        svc.DriveConnected += (_, s) => results.Add("B:" + s);
+        mock.Object.DriveConnected += (_, s) => results.Add("A:" + s);
+        mock.Object.DriveConnected += (_, s) => results.Add("B:" + s);
 
-        svc.SimulateConnect("SN-002");
+        mock.Raise(m => m.DriveConnected += null, this, "SN-002");
 
         Assert.Equal(2, results.Count);
         Assert.Contains("A:SN-002", results);
