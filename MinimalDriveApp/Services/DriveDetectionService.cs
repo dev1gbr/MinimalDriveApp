@@ -82,8 +82,8 @@ public class DriveDetectionService : IDriveDetectionService
 
     internal static string MapDriveType(object? value) => value switch
     {
-        2u or 2 => "Fixed",
-        3u or 3 => "Removable",
+        2u or 2 => "Removable",
+        3u or 3 => "Fixed",
         4u or 4 => "Network",
         5u or 5 => "CD-ROM",
         _ => "Unknown"
