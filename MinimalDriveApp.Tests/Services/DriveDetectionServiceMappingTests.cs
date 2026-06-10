@@ -5,8 +5,8 @@ namespace MinimalDriveApp.Tests.Services;
 public class DriveDetectionServiceMappingTests
 {
     [Theory]
-    [InlineData(2u, "Fixed")]
-    [InlineData(3u, "Removable")]
+    [InlineData(2u, "Removable")]
+    [InlineData(3u, "Fixed")]
     [InlineData(4u, "Network")]
     [InlineData(5u, "CD-ROM")]
     [InlineData(99u, "Unknown")]

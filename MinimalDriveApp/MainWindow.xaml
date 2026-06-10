@@ -43,6 +43,10 @@
                 <DataGridTextColumn Header="Drive" Width="60"
                                     Binding="{Binding DriveLetter}" />
 
+                <!-- 3a: Serial Number (diagnostic) -->
+                <DataGridTextColumn Header="Serial" Width="160"
+                                    Binding="{Binding SerialNumber}" />
+
                 <!-- 3: Drive Name -->
                 <DataGridTextColumn Header="Name" Width="140"
                                     Binding="{Binding VolumeName}" />
