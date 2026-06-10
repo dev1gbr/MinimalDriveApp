@@ -20,7 +20,8 @@ public sealed class HotPlugService : IHotPlugService
 
     public void Start()
     {
-        _session = CimSession.Create("localhost");
+        // null = local machine via DCOM; avoids WinRM/WS-Man dependency
+        _session = CimSession.Create(null);
 
         _connectSubscription = _session
             .SubscribeAsync(@"root\cimv2", "WQL", ConnectQuery)

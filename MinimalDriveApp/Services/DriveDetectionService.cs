@@ -9,7 +9,8 @@ public class DriveDetectionService : IDriveDetectionService
     {
         var result = new List<DriveInfo>();
 
-        using var session = CimSession.Create("localhost");
+        // null = local machine via DCOM; avoids WinRM/WS-Man dependency
+        using var session = CimSession.Create(null);
 
         var physicalDrives = session
             .QueryInstances(@"root\cimv2", "WQL", "SELECT * FROM Win32_DiskDrive")
