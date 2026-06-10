@@ -17,6 +17,6 @@ public class ToastService : IToastService
             .GetToastContent();
 
         var toast = new ToastNotification(content.GetXml());
-        ToastNotificationManager.CreateToastNotifier("ArchiveStack").Show(toast);
+        ToastNotificationManager.CreateToastNotifier("MinimalDriveApp").Show(toast);
     }
 }

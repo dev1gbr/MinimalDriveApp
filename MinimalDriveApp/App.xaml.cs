@@ -16,12 +16,12 @@ public partial class App : Application
 
         Ioc.Default.ConfigureServices(
             new ServiceCollection()
-                .AddSingleton<ArchiveStackDbContext>(sp =>
+                .AddSingleton<MinimalDriveAppDbContext>(sp =>
                 {
-                    var opts = new DbContextOptionsBuilder<ArchiveStackDbContext>()
-                        .UseSqlite("Data Source=archivestack.db")
+                    var opts = new DbContextOptionsBuilder<MinimalDriveAppDbContext>()
+                        .UseSqlite("Data Source=minimaldriveapp.db")
                         .Options;
-                    var db = new ArchiveStackDbContext(opts);
+                    var db = new MinimalDriveAppDbContext(opts);
                     db.Database.Migrate();
                     return db;
                 })

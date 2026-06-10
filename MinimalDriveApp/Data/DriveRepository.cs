@@ -4,9 +4,9 @@ namespace MinimalDriveApp.Data;
 
 public class DriveRepository : IDriveRepository
 {
-    private readonly ArchiveStackDbContext _db;
+    private readonly MinimalDriveAppDbContext _db;
 
-    public DriveRepository(ArchiveStackDbContext db) => _db = db;
+    public DriveRepository(MinimalDriveAppDbContext db) => _db = db;
 
     public KnownDrive? GetBySerial(string serialNumber)
         => _db.KnownDrives.Find(serialNumber);

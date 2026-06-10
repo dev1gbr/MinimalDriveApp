@@ -3,9 +3,9 @@ using MinimalDriveApp.Models;
 
 namespace MinimalDriveApp.Data;
 
-public class ArchiveStackDbContext : DbContext
+public class MinimalDriveAppDbContext : DbContext
 {
-    public ArchiveStackDbContext(DbContextOptions<ArchiveStackDbContext> options) : base(options) { }
+    public MinimalDriveAppDbContext(DbContextOptions<MinimalDriveAppDbContext> options) : base(options) { }
 
     public DbSet<KnownDrive> KnownDrives => Set<KnownDrive>();
 }

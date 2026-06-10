@@ -10,7 +10,7 @@ using MinimalDriveApp.Data;
 
 namespace MinimalDriveApp.Migrations
 {
-    [DbContext(typeof(ArchiveStackDbContext))]
+    [DbContext(typeof(MinimalDriveAppDbContext))]
     [Migration("20260610215529_InitialCreate")]
     partial class InitialCreate
     {

@@ -6,12 +6,12 @@ namespace MinimalDriveApp.Tests.Data;
 
 public class DriveRepositoryTests
 {
-    private static ArchiveStackDbContext CreateInMemoryContext()
+    private static MinimalDriveAppDbContext CreateInMemoryContext()
     {
-        var options = new DbContextOptionsBuilder<ArchiveStackDbContext>()
+        var options = new DbContextOptionsBuilder<MinimalDriveAppDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options;
-        return new ArchiveStackDbContext(options);
+        return new MinimalDriveAppDbContext(options);
     }
 
     [Fact]
