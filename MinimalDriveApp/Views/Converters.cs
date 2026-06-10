@@ -7,7 +7,7 @@ namespace MinimalDriveApp.Views;
 public class BytesToGbConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        => value is long bytes ? $"{bytes / 1_073_741_824.0:F1} GB" : "—";
+        => value is long bytes ? (bytes / 1_073_741_824.0).ToString("F1", CultureInfo.InvariantCulture) + " GB" : "—";
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         => throw new NotSupportedException();
