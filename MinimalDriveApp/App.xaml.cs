@@ -28,6 +28,7 @@ public partial class App : Application
                 .AddSingleton<IDriveRepository, DriveRepository>()
                 .AddSingleton<IDriveDetectionService, DriveDetectionService>()
                 .AddSingleton<IHotPlugService, HotPlugService>()
+                .AddSingleton<IToastService, ToastService>()
                 .AddSingleton<MainViewModel>()
                 .AddSingleton<MainWindow>()
                 .BuildServiceProvider());
