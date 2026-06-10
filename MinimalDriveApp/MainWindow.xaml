@@ -1,12 +1,88 @@
-﻿<Window x:Class="MinimalDriveApp.MainWindow"
+<Window x:Class="MinimalDriveApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MinimalDriveApp"
+        xmlns:views="clr-namespace:MinimalDriveApp.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="ArchiveStack Manager" Height="500" Width="1200">
 
+    <Window.Resources>
+        <views:BytesToGbConverter x:Key="BytesToGb" />
+        <views:NullableDateConverter x:Key="NullableDate" />
+    </Window.Resources>
+
+    <Grid>
+        <DataGrid ItemsSource="{Binding Drives}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  CanUserSortColumns="True"
+                  GridLinesVisibility="Horizontal"
+                  HeadersVisibility="Column"
+                  SelectionMode="Extended"
+                  Margin="8">
+
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsHealthWarning}" Value="True">
+                            <Setter Property="Background" Value="Orange"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsOutdatedBackup}" Value="True">
+                            <Setter Property="Background" Value="Yellow"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+
+            <DataGrid.Columns>
+                <!-- 1: Tick Box -->
+                <DataGridCheckBoxColumn Header="" Width="32" IsReadOnly="False" />
+
+                <!-- 2: Drive Letter -->
+                <DataGridTextColumn Header="Drive" Width="60"
+                                    Binding="{Binding DriveLetter}" />
+
+                <!-- 3: Drive Name -->
+                <DataGridTextColumn Header="Name" Width="140"
+                                    Binding="{Binding VolumeName}" />
+
+                <!-- 4: Drive Type -->
+                <DataGridTextColumn Header="Type" Width="100"
+                                    Binding="{Binding DriveType}" />
+
+                <!-- 5: File System -->
+                <DataGridTextColumn Header="File System" Width="80"
+                                    Binding="{Binding FileSystem}" />
+
+                <!-- 6: Capacity -->
+                <DataGridTextColumn Header="Capacity" Width="90"
+                                    Binding="{Binding Capacity, Converter={StaticResource BytesToGb}}" />
+
+                <!-- 7: Used Space -->
+                <DataGridTextColumn Header="Used" Width="90"
+                                    Binding="{Binding UsedSpace, Converter={StaticResource BytesToGb}}" />
+
+                <!-- 8: Free Space -->
+                <DataGridTextColumn Header="Free" Width="90"
+                                    Binding="{Binding FreeSpace, Converter={StaticResource BytesToGb}}" />
+
+                <!-- 9: Health Status -->
+                <DataGridTextColumn Header="Health" Width="90"
+                                    Binding="{Binding HealthStatus}" />
+
+                <!-- 10: Last Updated -->
+                <DataGridTextColumn Header="Last Updated" Width="130"
+                                    Binding="{Binding LastUpdated, Converter={StaticResource NullableDate}}" />
+
+                <!-- 11: Last Backed Up -->
+                <DataGridTextColumn Header="Last Backed Up" Width="130"
+                                    Binding="{Binding LastBackedUp, Converter={StaticResource NullableDate}}" />
+
+                <!-- 12: Connection Type -->
+                <DataGridTextColumn Header="Connection" Width="90"
+                                    Binding="{Binding ConnectionType}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
