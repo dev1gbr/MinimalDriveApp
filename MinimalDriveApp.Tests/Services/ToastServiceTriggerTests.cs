@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging.Abstractions;
 using MinimalDriveApp.Data;
 using MinimalDriveApp.Models;
 using MinimalDriveApp.Services;
@@ -24,7 +25,8 @@ public class ToastServiceTriggerTests
         var hotPlug = new Mock<IHotPlugService>();
         var toast = new Mock<IToastService>();
 
-        var vm = new MainViewModel(detection.Object, repo.Object, hotPlug.Object, toast.Object);
+        var vm = new MainViewModel(detection.Object, repo.Object, hotPlug.Object, toast.Object,
+            NullLogger<MainViewModel>.Instance);
         return (vm, detection, repo, hotPlug, toast);
     }
 
