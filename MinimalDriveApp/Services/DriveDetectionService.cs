@@ -65,7 +65,7 @@ public class DriveDetectionService : IDriveDetectionService
         }
     }
 
-    private static string MapDriveType(object? value) => value switch
+    internal static string MapDriveType(object? value) => value switch
     {
         2u or 2 => "Fixed",
         3u or 3 => "Removable",  // WMI uses 2=Fixed, 3=Removable — spec labels differ from WMI numeric values
@@ -74,7 +74,7 @@ public class DriveDetectionService : IDriveDetectionService
         _ => "Unknown"
     };
 
-    private static string MapConnectionType(string interfaceType) => interfaceType.ToUpperInvariant() switch
+    internal static string MapConnectionType(string interfaceType) => interfaceType.ToUpperInvariant() switch
     {
         "USB" => "USB",
         "SCSI" => "SATA",
