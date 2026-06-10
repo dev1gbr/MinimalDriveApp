@@ -5,16 +5,16 @@ namespace MinimalDriveApp.IntegrationTests.Data;
 
 public class DriveRepositoryIntegrationTests : IDisposable
 {
-    private readonly ArchiveStackDbContext _db;
+    private readonly MinimalDriveAppDbContext _db;
     private readonly DriveRepository _repo;
 
     public DriveRepositoryIntegrationTests()
     {
-        var options = new DbContextOptionsBuilder<ArchiveStackDbContext>()
+        var options = new DbContextOptionsBuilder<MinimalDriveAppDbContext>()
             .UseSqlite("Data Source=:memory:")
             .Options;
 
-        _db = new ArchiveStackDbContext(options);
+        _db = new MinimalDriveAppDbContext(options);
         _db.Database.OpenConnection();
         _db.Database.EnsureCreated();
         _repo = new DriveRepository(_db);

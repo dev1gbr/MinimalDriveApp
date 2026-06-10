@@ -9,7 +9,8 @@ public class DriveDetectionService : IDriveDetectionService
     {
         var result = new List<DriveInfo>();
 
-        using var session = CimSession.Create("localhost");
+        // null = local machine via DCOM; avoids WinRM/WS-Man dependency
+        using var session = CimSession.Create(null);
 
         var physicalDrives = session
             .QueryInstances(@"root\cimv2", "WQL", "SELECT * FROM Win32_DiskDrive")
@@ -44,13 +45,27 @@ public class DriveDetectionService : IDriveDetectionService
 
     private static IEnumerable<LogicalDiskData> GetDriveLetters(CimSession session, CimInstance disk)
     {
-        var diskQuery = $"ASSOCIATORS OF {{Win32_DiskDrive.DeviceID='{EscapeWql(disk.CimInstanceProperties["DeviceID"]?.Value?.ToString() ?? "")}'}} WHERE AssocClass=Win32_DiskDriveToDiskPartition";
+        // EnumerateAssociatedInstances is the correct MI API for association traversal
+        // QueryInstances with ASSOCIATORS OF WQL does not work reliably with CimSession
+        var partitions = session.EnumerateAssociatedInstances(
+            @"root\cimv2",
+            disk,
+            "Win32_DiskDriveToDiskPartition",
+            "Win32_DiskPartition",
+            "Antecedent",
+            "Dependent");
 
-        foreach (var partition in session.QueryInstances(@"root\cimv2", "WQL", diskQuery))
+        foreach (var partition in partitions)
         {
-            var partQuery = $"ASSOCIATORS OF {{Win32_DiskPartition.DeviceID='{EscapeWql(partition.CimInstanceProperties["DeviceID"]?.Value?.ToString() ?? "")}'}} WHERE AssocClass=Win32_LogicalDiskToPartition";
+            var logicals = session.EnumerateAssociatedInstances(
+                @"root\cimv2",
+                partition,
+                "Win32_LogicalDiskToPartition",
+                "Win32_LogicalDisk",
+                "Antecedent",
+                "Dependent");
 
-            foreach (var logical in session.QueryInstances(@"root\cimv2", "WQL", partQuery))
+            foreach (var logical in logicals)
             {
                 yield return new LogicalDiskData
                 {
@@ -68,7 +83,7 @@ public class DriveDetectionService : IDriveDetectionService
     internal static string MapDriveType(object? value) => value switch
     {
         2u or 2 => "Fixed",
-        3u or 3 => "Removable",  // WMI uses 2=Fixed, 3=Removable — spec labels differ from WMI numeric values
+        3u or 3 => "Removable",
         4u or 4 => "Network",
         5u or 5 => "CD-ROM",
         _ => "Unknown"
@@ -83,8 +98,6 @@ public class DriveDetectionService : IDriveDetectionService
         var s when s.Contains("NVME") => "NVMe",
         _ => interfaceType
     };
-
-    private static string EscapeWql(string value) => value.Replace("\\", "\\\\");
 
     private sealed class LogicalDiskData
     {

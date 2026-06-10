@@ -11,6 +11,7 @@ public partial class MainViewModel : ObservableObject
     private readonly IDriveDetectionService _detection;
     private readonly IDriveRepository _repository;
     private readonly IHotPlugService _hotPlug;
+    private readonly IToastService _toast;
 
     [ObservableProperty]
     private ObservableCollection<DriveInfo> _drives = new();
@@ -18,11 +19,13 @@ public partial class MainViewModel : ObservableObject
     public MainViewModel(
         IDriveDetectionService detection,
         IDriveRepository repository,
-        IHotPlugService hotPlug)
+        IHotPlugService hotPlug,
+        IToastService toast)
     {
         _detection = detection;
         _repository = repository;
         _hotPlug = hotPlug;
+        _toast = toast;
 
         _hotPlug.DriveConnected += OnDriveConnected;
         _hotPlug.DriveDisconnected += OnDriveDisconnected;
@@ -51,7 +54,11 @@ public partial class MainViewModel : ObservableObject
         var existing = Drives.FirstOrDefault(d => d.SerialNumber == serial);
         if (existing is not null) return;
 
-        Drives.Add(Enrich(drive));
+        var enriched = Enrich(drive);
+        Drives.Add(enriched);
+
+        if (enriched.Status == DriveStatus.BrandNewNeverSeen)
+            _toast.ShowNewDriveAlert(enriched.DriveLetter, enriched.SerialNumber);
     }
 
     private void OnDriveDisconnected(object? sender, string serial)

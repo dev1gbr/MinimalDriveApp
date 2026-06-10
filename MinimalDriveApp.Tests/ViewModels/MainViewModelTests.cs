@@ -19,8 +19,9 @@ public class MainViewModelTests
 
         var repo = new Mock<IDriveRepository>();
         var hotPlug = new Mock<IHotPlugService>();
+        var toast = new Mock<IToastService>();
 
-        var vm = new MainViewModel(detection.Object, repo.Object, hotPlug.Object);
+        var vm = new MainViewModel(detection.Object, repo.Object, hotPlug.Object, toast.Object);
         return (vm, detection, repo, hotPlug);
     }
 
