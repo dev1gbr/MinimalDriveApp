@@ -362,9 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-# Agent folder
+# Agent folder 
 .claude
-
-# npx skills CLI lock file (skills installed globally, not per-project)
-skills-lock.json
-.agents/
