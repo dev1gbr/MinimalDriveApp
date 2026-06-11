@@ -90,3 +90,20 @@ Requires Windows 10 or Windows 11. Logs are written to `logs/app-{date}.log` nex
 |---|---|---|
 | `MinimalDriveApp.Tests` | Unit (xUnit + Moq) | 61 |
 | `MinimalDriveApp.IntegrationTests` | Integration (xUnit + EF SQLite `:memory:`) | 3 |
+
+## GitHub Flow
+
+The entire project was developed using GitHub Flow: every task starts as a GitHub Issue, gets its own feature branch, and is merged via a reviewed Pull Request. Commit history, branches, and PRs are visible in the repository.
+
+Git Extensions was used as the local Git client throughout development.
+
+### Commit graph (Git Extensions)
+![Commit graph in Git Extensions](Doc/git-flow.png)
+
+### GitHub Issues and Pull Requests
+<table>
+<tr>
+<td><img src="Doc/issues.png" alt="GitHub Issues list"/></td>
+<td><img src="Doc/PR.png" alt="GitHub Pull Requests list"/></td>
+</tr>
+</table>
