@@ -105,15 +105,17 @@ public partial class DriveDashboardViewModel : ObservableObject
 
     public bool IsHealthOk => !(Drive?.IsHealthWarning ?? false);
 
+    private const long TB = 1_099_511_627_776L;
+    private const long GB = 1_073_741_824L;
+    private const long MB = 1_048_576L;
+    private const long KB = 1_024L;
+
     internal static string FormatBytes(long bytes)
     {
         if (bytes <= 0) return "0 GB";
-        if (bytes >= 1_099_511_627_776L)
-            return (bytes / 1_099_511_627_776.0).ToString("F1", CultureInfo.InvariantCulture) + " TB";
-        if (bytes >= 1_073_741_824L)
-            return (bytes / 1_073_741_824.0).ToString("F1", CultureInfo.InvariantCulture) + " GB";
-        if (bytes >= 1_048_576L)
-            return (bytes / 1_048_576.0).ToString("F1", CultureInfo.InvariantCulture) + " MB";
-        return (bytes / 1024.0).ToString("F1", CultureInfo.InvariantCulture) + " KB";
+        if (bytes >= TB) return (bytes / (double)TB).ToString("F1", CultureInfo.InvariantCulture) + " TB";
+        if (bytes >= GB) return (bytes / (double)GB).ToString("F1", CultureInfo.InvariantCulture) + " GB";
+        if (bytes >= MB) return (bytes / (double)MB).ToString("F1", CultureInfo.InvariantCulture) + " MB";
+        return (bytes / (double)KB).ToString("F1", CultureInfo.InvariantCulture) + " KB";
     }
 }
