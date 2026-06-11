@@ -1,0 +1,42 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ── Card ── -->
+    <Thickness x:Key="Spacing.Card.Padding">14,12,14,12</Thickness>
+    <CornerRadius x:Key="Spacing.Card.CornerRadius">8</CornerRadius>
+
+    <!-- ── Panel / page margins ── -->
+    <Thickness x:Key="Spacing.Panel.Margin">8,4,8,8</Thickness>
+    <Thickness x:Key="Spacing.DataGrid.Margin">8,8,8,4</Thickness>
+
+    <!-- ── Column gaps ── -->
+    <Thickness x:Key="Spacing.Column.GapRight">0,0,6,0</Thickness>
+
+    <!-- ── Tile row gap ── -->
+    <GridLength x:Key="Spacing.Tile.Gap">6</GridLength>
+
+    <!-- ── Detail grid ── -->
+    <Thickness x:Key="Spacing.Detail.Label.Margin">0,0,12,6</Thickness>
+    <Thickness x:Key="Spacing.Detail.Value.Margin">0,0,0,6</Thickness>
+    <Thickness x:Key="Spacing.Detail.Spacer.Width">24</Thickness>
+
+    <!-- ── Header / subtitle ── -->
+    <Thickness x:Key="Spacing.Header.Margin">0,0,0,4</Thickness>
+    <Thickness x:Key="Spacing.Subtitle.Margin">0,3,0,0</Thickness>
+
+    <!-- ── Inline icon gap ── -->
+    <Thickness x:Key="Spacing.Icon.MarginRight">0,0,12,0</Thickness>
+    <Thickness x:Key="Spacing.HealthIcon.Margin">0,0,5,6</Thickness>
+
+    <!-- ── Muted label bottom gap ── -->
+    <Thickness x:Key="Spacing.MutedLabel.Margin">0,0,0,3</Thickness>
+
+    <!-- ── Donut chart ── -->
+    <sys:Double xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                x:Key="Spacing.Donut.Size">160</sys:Double>
+    <sys:Double xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                x:Key="Spacing.Donut.HoleOffset">28</sys:Double>
+    <sys:Double xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                x:Key="Spacing.Donut.HoleSize">104</sys:Double>
+
+</ResourceDictionary>

@@ -1,18 +1,19 @@
 <Application x:Class="MinimalDriveApp.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:MinimalDriveApp">
+             xmlns:views="clr-namespace:MinimalDriveApp.Views">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!-- MahApps.Metro theme — dark + blue accent -->
+                <!-- MahApps.Metro — dark + blue accent -->
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Blue.xaml"/>
+                <!-- App theme — colors, typography, spacing, control styles -->
+                <ResourceDictionary Source="pack://application:,,,/MinimalDriveApp;component/Themes/Theme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <!-- BoolToVisibility converter used in DriveDashboardView -->
-            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+            <views:BoolToVisibilityConverter x:Key="BoolToVis"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -7,7 +7,7 @@
         xmlns:views="clr-namespace:MinimalDriveApp.Views"
         mc:Ignorable="d"
         Title="ArchiveStack Manager" Height="760" Width="1280"
-        Background="#12121E"
+        Background="{StaticResource Brush.Background.Window}"
         TitleCharacterCasing="Normal">
 
     <mah:MetroWindow.Resources>
@@ -17,9 +17,7 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <!-- Drive table -->
             <RowDefinition Height="*"/>
-            <!-- Dashboard panel -->
             <RowDefinition Height="240"/>
         </Grid.RowDefinitions>
 
@@ -33,72 +31,35 @@
                   GridLinesVisibility="Horizontal"
                   HeadersVisibility="Column"
                   SelectionMode="Single"
-                  Margin="8,8,8,4">
+                  Margin="{StaticResource Spacing.DataGrid.Margin}">
 
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsHealthWarning}" Value="True">
-                            <Setter Property="Background" Value="#CC6000"/>
+                            <Setter Property="Background" Value="{StaticResource Brush.Row.HealthWarning}"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsOutdatedBackup}" Value="True">
-                            <Setter Property="Background" Value="#7A7000"/>
+                            <Setter Property="Background" Value="{StaticResource Brush.Row.OutdatedBackup}"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </DataGrid.RowStyle>
 
             <DataGrid.Columns>
-                <!-- 1: Tick Box -->
                 <DataGridCheckBoxColumn Header="" Width="32" IsReadOnly="False" />
-
-                <!-- 2: Drive Letter -->
-                <DataGridTextColumn Header="Drive" Width="60"
-                                    Binding="{Binding DriveLetter}" />
-
-                <!-- 3: Serial Number -->
-                <DataGridTextColumn Header="Serial" Width="160"
-                                    Binding="{Binding SerialNumber}" />
-
-                <!-- 4: Drive Name -->
-                <DataGridTextColumn Header="Name" Width="140"
-                                    Binding="{Binding VolumeName}" />
-
-                <!-- 5: Drive Type -->
-                <DataGridTextColumn Header="Type" Width="100"
-                                    Binding="{Binding DriveType}" />
-
-                <!-- 6: File System -->
-                <DataGridTextColumn Header="File System" Width="80"
-                                    Binding="{Binding FileSystem}" />
-
-                <!-- 7: Capacity -->
-                <DataGridTextColumn Header="Capacity" Width="90"
-                                    Binding="{Binding Capacity, Converter={StaticResource BytesToGb}}" />
-
-                <!-- 8: Used Space -->
-                <DataGridTextColumn Header="Used" Width="90"
-                                    Binding="{Binding UsedSpace, Converter={StaticResource BytesToGb}}" />
-
-                <!-- 9: Free Space -->
-                <DataGridTextColumn Header="Free" Width="90"
-                                    Binding="{Binding FreeSpace, Converter={StaticResource BytesToGb}}" />
-
-                <!-- 10: Health Status -->
-                <DataGridTextColumn Header="Health" Width="90"
-                                    Binding="{Binding HealthStatus}" />
-
-                <!-- 11: Last Updated -->
-                <DataGridTextColumn Header="Last Updated" Width="130"
-                                    Binding="{Binding LastUpdated, Converter={StaticResource NullableDate}}" />
-
-                <!-- 12: Last Backed Up -->
-                <DataGridTextColumn Header="Last Backed Up" Width="130"
-                                    Binding="{Binding LastBackedUp, Converter={StaticResource NullableDate}}" />
-
-                <!-- 13: Connection Type -->
-                <DataGridTextColumn Header="Connection" Width="90"
-                                    Binding="{Binding ConnectionType}" />
+                <DataGridTextColumn Header="Drive"          Width="60"  Binding="{Binding DriveLetter}" />
+                <DataGridTextColumn Header="Serial"         Width="160" Binding="{Binding SerialNumber}" />
+                <DataGridTextColumn Header="Name"           Width="140" Binding="{Binding VolumeName}" />
+                <DataGridTextColumn Header="Type"           Width="100" Binding="{Binding DriveType}" />
+                <DataGridTextColumn Header="File System"    Width="80"  Binding="{Binding FileSystem}" />
+                <DataGridTextColumn Header="Capacity"       Width="90"  Binding="{Binding Capacity,     Converter={StaticResource BytesToGb}}" />
+                <DataGridTextColumn Header="Used"           Width="90"  Binding="{Binding UsedSpace,    Converter={StaticResource BytesToGb}}" />
+                <DataGridTextColumn Header="Free"           Width="90"  Binding="{Binding FreeSpace,    Converter={StaticResource BytesToGb}}" />
+                <DataGridTextColumn Header="Health"         Width="90"  Binding="{Binding HealthStatus}" />
+                <DataGridTextColumn Header="Last Updated"   Width="130" Binding="{Binding LastUpdated,  Converter={StaticResource NullableDate}}" />
+                <DataGridTextColumn Header="Last Backed Up" Width="130" Binding="{Binding LastBackedUp, Converter={StaticResource NullableDate}}" />
+                <DataGridTextColumn Header="Connection"     Width="90"  Binding="{Binding ConnectionType}" />
             </DataGrid.Columns>
         </DataGrid>
 
