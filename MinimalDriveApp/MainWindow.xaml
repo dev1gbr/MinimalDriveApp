@@ -22,9 +22,6 @@
                        AutomaticStateManagement="False"
                        ShowQuickAccessToolBarAboveRibbon="False">
 
-            <fluent:Ribbon.Menu>
-                <fluent:ApplicationMenu KeyTip="F"/>
-            </fluent:Ribbon.Menu>
 
             <fluent:RibbonTabItem Header="Drive">
 
