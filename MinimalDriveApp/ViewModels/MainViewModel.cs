@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Extensions.Logging;
 using MinimalDriveApp.Data;
 using MinimalDriveApp.Models;
 using MinimalDriveApp.Services;
@@ -12,6 +13,7 @@ public partial class MainViewModel : ObservableObject
     private readonly IDriveRepository _repository;
     private readonly IHotPlugService _hotPlug;
     private readonly IToastService _toast;
+    private readonly ILogger<MainViewModel> _logger;
 
     [ObservableProperty]
     private ObservableCollection<DriveInfo> _drives = new();
@@ -20,12 +22,14 @@ public partial class MainViewModel : ObservableObject
         IDriveDetectionService detection,
         IDriveRepository repository,
         IHotPlugService hotPlug,
-        IToastService toast)
+        IToastService toast,
+        ILogger<MainViewModel> logger)
     {
         _detection = detection;
         _repository = repository;
         _hotPlug = hotPlug;
         _toast = toast;
+        _logger = logger;
 
         _hotPlug.DriveConnected += OnDriveConnected;
         _hotPlug.DriveDisconnected += OnDriveDisconnected;
@@ -33,6 +37,7 @@ public partial class MainViewModel : ObservableObject
 
     public void Initialize()
     {
+        _logger.LogInformation("MainViewModel initializing");
         LoadDrives();
         _hotPlug.Start();
     }
@@ -40,32 +45,58 @@ public partial class MainViewModel : ObservableObject
     private void LoadDrives()
     {
         var wmiDrives = _detection.GetConnectedDrives();
+        _logger.LogInformation("Initial scan found {Count} logical drive(s)", wmiDrives.Count);
         var enriched = wmiDrives.Select(Enrich).ToList();
         Drives = new ObservableCollection<DriveInfo>(enriched);
     }
 
     private void OnDriveConnected(object? sender, string serial)
     {
+        _logger.LogInformation("OnDriveConnected triggered for serial={Serial}", serial);
         _repository.Upsert(serial);
         var wmiDrives = _detection.GetConnectedDrives();
         var drive = wmiDrives.FirstOrDefault(d => d.SerialNumber == serial);
-        if (drive is null) return;
+        if (drive is null)
+        {
+            _logger.LogWarning("Drive serial={Serial} not found in WMI scan after connect event", serial);
+            return;
+        }
 
         var existing = Drives.FirstOrDefault(d => d.SerialNumber == serial);
-        if (existing is not null) return;
+        if (existing is not null)
+        {
+            _logger.LogDebug("Drive serial={Serial} already in list, skipping", serial);
+            return;
+        }
 
         var enriched = Enrich(drive);
         Drives.Add(enriched);
+        _logger.LogInformation("Drive serial={Serial} status={Status} added to list", serial, enriched.Status);
 
         if (enriched.Status == DriveStatus.BrandNewNeverSeen)
+        {
+            _logger.LogInformation("BrandNew drive serial={Serial} — firing toast", serial);
             _toast.ShowNewDriveAlert(enriched.DriveLetter, enriched.SerialNumber);
+        }
+        else
+        {
+            _logger.LogInformation("Drive serial={Serial} is {Status} — no toast", serial, enriched.Status);
+        }
     }
 
     private void OnDriveDisconnected(object? sender, string serial)
     {
+        _logger.LogInformation("OnDriveDisconnected triggered for serial={Serial}", serial);
         var drive = Drives.FirstOrDefault(d => d.SerialNumber == serial);
         if (drive is not null)
+        {
             Drives.Remove(drive);
+            _logger.LogInformation("Drive serial={Serial} removed from list", serial);
+        }
+        else
+        {
+            _logger.LogWarning("Drive serial={Serial} not found in list on disconnect", serial);
+        }
     }
 
     private DriveInfo Enrich(DriveInfo drive)
@@ -82,6 +113,8 @@ public partial class MainViewModel : ObservableObject
 
         drive.LastUpdated = known?.LastUpdated;
         drive.LastBackedUp = known?.LastBackedUp;
+
+        _logger.LogDebug("Enrich serial={Serial} → status={Status}", drive.SerialNumber, drive.Status);
         return drive;
     }
 }
