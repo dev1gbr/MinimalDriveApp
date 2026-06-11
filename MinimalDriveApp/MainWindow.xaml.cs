@@ -1,8 +1,8 @@
-using MahApps.Metro.Controls;
+using Wpf.Ui.Controls;
 
 namespace MinimalDriveApp;
 
-public partial class MainWindow : MetroWindow
+public partial class MainWindow : FluentWindow
 {
     public MainWindow()
     {

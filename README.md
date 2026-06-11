@@ -27,7 +27,7 @@ A WPF desktop demo application for real-time Windows drive detection and monitor
 | Layer | Technology |
 |---|---|
 | UI framework | WPF (.NET 8, `net8.0-windows10.0.17763.0`) |
-| UI theme | MahApps.Metro 2.4.10 — Dark.Blue |
+| UI theme | WPF-UI 4.3.0 — Windows 11 Fluent dark theme (`FluentWindow`, `ApplicationThemeManager`) |
 | Donut chart | LiveChartsCore.SkiaSharpView.WPF 2.1.0-dev-570 — `PieChart` with `PieSeries<double>` |
 | MVVM | CommunityToolkit.Mvvm 8.4.0 |
 | DI container | Microsoft.Extensions.DependencyInjection 8.0.0 + `Ioc.Default` |
@@ -42,7 +42,7 @@ A WPF desktop demo application for real-time Windows drive detection and monitor
 |---|---|
 | `CommunityToolkit.Mvvm` | 8.4.0 |
 | `LiveChartsCore.SkiaSharpView.WPF` | 2.1.0-dev-570 |
-| `MahApps.Metro` | 2.4.10 |
+| `WPF-UI` | 4.3.0 |
 | `Microsoft.EntityFrameworkCore.Sqlite` | 8.0.0 |
 | `Microsoft.EntityFrameworkCore.Tools` | 8.0.0 |
 | `Microsoft.Extensions.DependencyInjection` | 8.0.0 |
@@ -62,8 +62,8 @@ MinimalDriveApp/
 ├── ViewModels/      # MainViewModel, DriveDashboardViewModel
 ├── Views/           # DriveDashboardView UserControl, Converters
 ├── Themes/          # Global ResourceDictionary — Colors, Typography, Spacing, Controls, Theme (entry-point)
-├── App.xaml.cs      # DI setup, Serilog init, MahApps Dark.Blue theme + Themes/Theme.xaml
-├── MainWindow.xaml  # MetroWindow — DataGrid (top) + Dashboard panel (bottom)
+├── App.xaml.cs      # DI setup, Serilog init, WPF-UI dark theme + Themes/Theme.xaml
+├── MainWindow.xaml  # FluentWindow — DataGrid (top) + Dashboard panel (bottom)
 └── Migrations/      # EF Core migrations
 ```
 
