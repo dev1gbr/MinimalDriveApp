@@ -8,6 +8,7 @@ using MinimalDriveApp.ViewModels;
 using Serilog;
 using System.IO;
 using System.Windows;
+using Wpf.Ui.Appearance;
 
 namespace MinimalDriveApp;
 
@@ -16,6 +17,8 @@ public partial class App : Application
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
+
+        ApplicationThemeManager.Apply(ApplicationTheme.Dark);
 
         var logPath = Path.Combine(
             AppDomain.CurrentDomain.BaseDirectory, "logs", "app-.log");
