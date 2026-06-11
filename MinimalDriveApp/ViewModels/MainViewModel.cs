@@ -53,7 +53,6 @@ public partial class MainViewModel : ObservableObject
     private void OnDriveConnected(object? sender, string serial)
     {
         _logger.LogInformation("OnDriveConnected triggered for serial={Serial}", serial);
-        _repository.Upsert(serial);
         var wmiDrives = _detection.GetConnectedDrives();
         var drive = wmiDrives.FirstOrDefault(d => d.SerialNumber == serial);
         if (drive is null)
@@ -101,20 +100,26 @@ public partial class MainViewModel : ObservableObject
 
     private DriveInfo Enrich(DriveInfo drive)
     {
+        // check existence BEFORE upsert — otherwise a brand-new drive would always
+        // resolve to PreviouslySeenUnnamed (upsert inserts with UserName=null, then
+        // GetBySerial returns a non-null KnownDrive that matches { UserName: _ })
+        var preExisting = _repository.GetBySerial(drive.SerialNumber);
         _repository.Upsert(drive.SerialNumber);
         var known = _repository.GetBySerial(drive.SerialNumber);
 
-        drive.Status = known switch
-        {
-            { UserName: { Length: > 0 } } => DriveStatus.KnownNamedDrive,
-            { UserName: _ } => DriveStatus.PreviouslySeenUnnamed,
-            _ => DriveStatus.BrandNewNeverSeen
-        };
+        drive.Status = preExisting is null
+            ? DriveStatus.BrandNewNeverSeen
+            : known switch
+            {
+                { UserName: { Length: > 0 } } => DriveStatus.KnownNamedDrive,
+                _ => DriveStatus.PreviouslySeenUnnamed
+            };
 
         drive.LastUpdated = known?.LastUpdated;
         drive.LastBackedUp = known?.LastBackedUp;
 
-        _logger.LogDebug("Enrich serial={Serial} → status={Status}", drive.SerialNumber, drive.Status);
+        _logger.LogDebug("Enrich serial={Serial} preExisting={PreExisting} → status={Status}",
+            drive.SerialNumber, preExisting is not null, drive.Status);
         return drive;
     }
 }

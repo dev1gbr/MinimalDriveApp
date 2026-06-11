@@ -35,7 +35,10 @@ public class ToastServiceTriggerTests
     {
         var drive = MakeDrive("SN-NEW", "F:");
         var (vm, detection, repo, hotPlug, toast) = Build();
-        repo.Setup(r => r.GetBySerial("SN-NEW")).Returns((KnownDrive?)null);
+        // Enrich calls GetBySerial twice: pre-upsert (null → BrandNew) and post-upsert (record)
+        repo.SetupSequence(r => r.GetBySerial("SN-NEW"))
+            .Returns((KnownDrive?)null)
+            .Returns(new KnownDrive { SerialNumber = "SN-NEW" });
 
         // initial scan returns nothing; after hot-plug WMI sees the new drive
         detection.SetupSequence(s => s.GetConnectedDrives())
