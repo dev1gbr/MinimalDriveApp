@@ -27,7 +27,8 @@ A WPF desktop demo application for real-time Windows drive detection and monitor
 | Layer | Technology |
 |---|---|
 | UI framework | WPF (.NET 8, `net8.0-windows10.0.17763.0`) |
-| UI theme | WPF-UI 4.3.0 — Windows 11 Fluent dark theme (`FluentWindow`, `ApplicationThemeManager`) |
+| UI theme | WPF-UI 4.3.0 — Windows 11 Fluent dark theme (`ApplicationThemeManager`) |
+| Ribbon | Fluent.Ribbon 11.0.0 — `RibbonWindow` with Drive tab (Refresh, Set Up Drive, Dashboard toggle) |
 | Donut chart | LiveChartsCore.SkiaSharpView.WPF 2.1.0-dev-570 — `PieChart` with `PieSeries<double>` |
 | MVVM | CommunityToolkit.Mvvm 8.4.0 |
 | DI container | Microsoft.Extensions.DependencyInjection 8.0.0 + `Ioc.Default` |
@@ -41,6 +42,7 @@ A WPF desktop demo application for real-time Windows drive detection and monitor
 | Package | Version |
 |---|---|
 | `CommunityToolkit.Mvvm` | 8.4.0 |
+| `Fluent.Ribbon` | 11.0.0 |
 | `LiveChartsCore.SkiaSharpView.WPF` | 2.1.0-dev-570 |
 | `WPF-UI` | 4.3.0 |
 | `Microsoft.EntityFrameworkCore.Sqlite` | 8.0.0 |
