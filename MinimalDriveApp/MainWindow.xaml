@@ -27,15 +27,18 @@
 
                 <fluent:RibbonGroupBox Header="Actions">
                     <fluent:Button Header="Refresh"
+                                   LargeIcon="{StaticResource Icon.Refresh}"
                                    Command="{Binding RefreshCommand}"
                                    Size="Large"/>
                     <fluent:Button Header="Set Up Drive"
+                                   LargeIcon="{StaticResource Icon.SetUpDrive}"
                                    Command="{Binding SetUpDriveCommand}"
                                    Size="Large"/>
                 </fluent:RibbonGroupBox>
 
                 <fluent:RibbonGroupBox Header="View">
                     <fluent:ToggleButton Header="Dashboard"
+                                         LargeIcon="{StaticResource Icon.Dashboard}"
                                          IsChecked="{Binding IsDashboardVisible, Mode=TwoWay}"
                                          Size="Large"/>
                 </fluent:RibbonGroupBox>
