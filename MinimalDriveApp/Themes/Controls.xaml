@@ -42,4 +42,49 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
 
+    <!-- ── DataGrid implicit dark theme ── -->
+    <Style TargetType="DataGrid">
+        <Setter Property="Background"            Value="{DynamicResource Brush.Background.Window}"/>
+        <Setter Property="Foreground"            Value="{DynamicResource Brush.Text.Primary}"/>
+        <Setter Property="BorderBrush"           Value="{DynamicResource Brush.DataGrid.Border}"/>
+        <Setter Property="BorderThickness"       Value="0"/>
+        <Setter Property="RowBackground"         Value="{DynamicResource Brush.Background.Window}"/>
+        <Setter Property="AlternatingRowBackground" Value="{DynamicResource Brush.DataGrid.RowAlt}"/>
+        <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource Brush.DataGrid.Border}"/>
+        <Setter Property="VerticalGridLinesBrush"   Value="Transparent"/>
+    </Style>
+
+    <Style TargetType="DataGridRow">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Primary}"/>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{DynamicResource Brush.DataGrid.RowSelected}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="DataGridCell">
+        <Setter Property="Foreground"       Value="{DynamicResource Brush.Text.Primary}"/>
+        <Setter Property="BorderBrush"      Value="Transparent"/>
+        <Setter Property="BorderThickness"  Value="0"/>
+        <Setter Property="Background"       Value="Transparent"/>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Primary}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="DataGridColumnHeader">
+        <Setter Property="Background"   Value="{DynamicResource Brush.DataGrid.Header}"/>
+        <Setter Property="Foreground"   Value="{DynamicResource Brush.Text.Muted}"/>
+        <Setter Property="FontSize"     Value="{DynamicResource Font.Size.Small}"/>
+        <Setter Property="FontFamily"   Value="{DynamicResource Font.Family.Default}"/>
+        <Setter Property="Padding"      Value="8,6,8,6"/>
+        <Setter Property="BorderBrush"  Value="{DynamicResource Brush.DataGrid.Border}"/>
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+    </Style>
+
 </ResourceDictionary>

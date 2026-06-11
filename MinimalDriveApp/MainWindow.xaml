@@ -18,7 +18,8 @@
 
         <!-- ── Ribbon ── -->
         <fluent:Ribbon DockPanel.Dock="Top"
-                       AutomaticStateManagement="False">
+                       AutomaticStateManagement="False"
+                       ShowQuickAccessToolBarAboveRibbon="False">
 
             <fluent:Ribbon.Menu>
                 <fluent:ApplicationMenu KeyTip="F"/>
@@ -64,7 +65,7 @@
                       Margin="{StaticResource Spacing.DataGrid.Margin}">
 
                 <DataGrid.RowStyle>
-                    <Style TargetType="DataGridRow">
+                    <Style TargetType="DataGridRow" BasedOn="{StaticResource {x:Type DataGridRow}}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsHealthWarning}" Value="True">
                                 <Setter Property="Background" Value="{StaticResource Brush.Row.HealthWarning}"/>
