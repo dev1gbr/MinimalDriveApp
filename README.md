@@ -1,53 +1,109 @@
 # MinimalDriveApp
 
-A minimal WPF desktop demo application for real-time Windows drive detection and monitoring.
+A WPF desktop demo application for real-time Windows drive detection and monitoring, built as a Module 1 proof-of-concept.
+
+## Screenshots
+
+### Drive list with SQLite schema
+![Drive list and SQLite database](Doc/app+sqlite-browser.png)
+
+### Hot-plug detection and toast notification
+![Hot-plug detection and new drive toast](Doc/notification.png)
 
 ## What it does
 
-- **Automatic drive detection** — scans all connected drives on startup with no manual refresh required
-- **Real-time hot-plug** — drives appear and disappear in the list automatically within seconds of being connected or removed
-- **Drive table** — displays drive letter, label, type, file system, capacity, used space, free space, health status, and connection type
+- **Automatic drive detection** — scans all connected drives on startup, no manual refresh
+- **Real-time hot-plug** — drives appear and disappear automatically within seconds of being connected or removed
+- **Encrypted drive support** — hardware-encrypted drives (e.g. WD Passport) show as `Encrypted` even when locked and inaccessible to the OS
+- **Drive table** — 13 columns: drive letter, serial number, name, type, file system, capacity, used, free, health, last updated, last backed up, connection type
 - **Three drive statuses** — distinguishes Known Named Drives, Previously Seen Unnamed Drives, and Brand New Never Seen Drives using a local SQLite database keyed on hardware serial number
 - **Row highlighting** — yellow rows for drives with unbacked changes, orange rows for drives with a health warning
-- **New drive alert** — Windows 10/11 toast notification with a "Set Up Now" action when an unknown drive is connected
+- **New drive alert** — Windows 10/11 toast notification with a "Set Up Now" action when an unknown drive is connected for the first time
+- **Structured logging** — Serilog writes a daily rolling log to `logs/app-{date}.log` for diagnosing hot-plug and notification issues
 
 ## Technology
 
 | Layer | Technology |
 |---|---|
-| UI framework | WPF (.NET 6, `net6.0-windows`) |
-| MVVM | CommunityToolkit.Mvvm |
-| Drive data | WMI — Microsoft.Management.Infrastructure (MI API) |
-| Persistence | EF Core + SQLite (Microsoft.EntityFrameworkCore.Sqlite) |
-| Notifications | Microsoft.Toolkit.Uwp.Notifications |
+| UI framework | WPF (.NET 6, `net6.0-windows10.0.17763.0`) |
+| MVVM | CommunityToolkit.Mvvm 8.4.0 |
+| DI container | Microsoft.Extensions.DependencyInjection 7.0.0 + `Ioc.Default` |
+| Drive data | WMI — Microsoft.Management.Infrastructure 3.0.0 (MI API) |
+| Persistence | EF Core 7.0.20 + SQLite |
+| Notifications | Microsoft.Toolkit.Uwp.Notifications 7.1.3 |
+| Logging | Serilog 4.2.0 + Serilog.Sinks.File 6.0.0 |
 
 ## NuGet packages
 
-```
-Microsoft.Management.Infrastructure
-Microsoft.EntityFrameworkCore.Sqlite
-Microsoft.EntityFrameworkCore.Tools
-CommunityToolkit.Mvvm
-Microsoft.Toolkit.Uwp.Notifications
-```
+| Package | Version |
+|---|---|
+| `CommunityToolkit.Mvvm` | 8.4.0 |
+| `Microsoft.EntityFrameworkCore.Sqlite` | 7.0.20 |
+| `Microsoft.EntityFrameworkCore.Tools` | 7.0.20 |
+| `Microsoft.Extensions.DependencyInjection` | 7.0.0 |
+| `Microsoft.Management.Infrastructure` | 3.0.0 |
+| `Microsoft.Toolkit.Uwp.Notifications` | 7.1.3 |
+| `Serilog` | 4.2.0 |
+| `Serilog.Extensions.Logging` | 7.0.0 |
+| `Serilog.Sinks.File` | 6.0.0 |
 
 ## Architecture
 
 ```
 MinimalDriveApp/
 ├── Models/          # DriveInfo (WMI DTO), KnownDrive (EF entity), DriveStatus enum
-├── Data/            # DbContext, DriveRepository
-├── Services/        # DriveDetectionService (WMI), HotPlugService (CIM subscription)
-├── ViewModels/      # MainViewModel — merges WMI data with SQLite history
-├── Views/           # MainWindow.xaml — DataGrid with row styles
+├── Data/            # DbContext, design-time factory, DriveRepository
+├── Services/        # DriveDetectionService (WMI), HotPlugService (CIM subscription), ToastService
+├── ViewModels/      # MainViewModel — merges WMI data with SQLite history, triggers toasts
+├── Views/           # Converters (BytesToGb, NullableDate)
+├── App.xaml.cs      # DI setup, Serilog init (no StartupUri)
+├── MainWindow.xaml  # DataGrid with 13 columns and row DataTriggers
 └── Migrations/      # EF Core migrations
+```
+
+**Data flow:**
+```
+WMI (MI API)        →  DriveDetectionService  →  DriveInfo (DTO)   ↘
+SQLite (EF Core)    →  DriveRepository        →  KnownDrive        →  MainViewModel  →  View
+HotPlug (CIM sub.)  →  HotPlugService         →  event              ↗
+Serilog             →  ILogger<T> injected into all services and ViewModel
 ```
 
 ## Build & Run
 
 ```powershell
+# Build
 dotnet build MinimalDriveApp.sln
+
+# Run
 dotnet run --project MinimalDriveApp\MinimalDriveApp.csproj
+
+# Run all tests
+dotnet test MinimalDriveApp.sln
 ```
 
-Requires Windows 10 or Windows 11.
+Requires Windows 10 or Windows 11. Logs are written to `logs/app-{date}.log` next to the executable.
+
+## Tests
+
+| Project | Type | Count |
+|---|---|---|
+| `MinimalDriveApp.Tests` | Unit (xUnit + Moq) | 61 |
+| `MinimalDriveApp.IntegrationTests` | Integration (xUnit + EF SQLite `:memory:`) | 3 |
+
+## GitHub Flow
+
+The entire project was developed using GitHub Flow: every task starts as a GitHub Issue, gets its own feature branch, and is merged via a reviewed Pull Request. Commit history, branches, and PRs are visible in the repository.
+
+Git Extensions was used as the local Git client throughout development.
+
+### Commit graph (Git Extensions)
+![Commit graph in Git Extensions](Doc/git-flow.png)
+
+### GitHub Issues and Pull Requests
+<table>
+<tr>
+<td><img src="Doc/issues.png" alt="GitHub Issues list"/></td>
+<td><img src="Doc/PR.png" alt="GitHub Pull Requests list"/></td>
+</tr>
+</table>
