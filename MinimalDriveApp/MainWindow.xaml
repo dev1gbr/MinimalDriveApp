@@ -12,16 +12,13 @@
     <fluent:RibbonWindow.Resources>
         <views:BytesToGbConverter x:Key="BytesToGb" />
         <views:NullableDateConverter x:Key="NullableDate" />
-        <!-- Hide the Quick Access Toolbar completely -->
-        <Style TargetType="fluent:QuickAccessToolBar">
-            <Setter Property="Visibility" Value="Collapsed"/>
-        </Style>
     </fluent:RibbonWindow.Resources>
 
     <DockPanel>
 
         <!-- ── Ribbon ── -->
-        <fluent:Ribbon DockPanel.Dock="Top"
+        <fluent:Ribbon x:Name="MainRibbon"
+                       DockPanel.Dock="Top"
                        AutomaticStateManagement="False"
                        ShowQuickAccessToolBarAboveRibbon="False">
 
