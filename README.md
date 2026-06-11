@@ -28,11 +28,11 @@ A WPF desktop demo application for real-time Windows drive detection and monitor
 |---|---|
 | UI framework | WPF (.NET 8, `net8.0-windows10.0.17763.0`) |
 | UI theme | MahApps.Metro 2.4.10 — Dark.Blue |
-| Charts | LiveChartsCore.SkiaSharpView.WPF 2.0.4 |
+| Donut chart | WPF Path + `DonutArcConverter` (IMultiValueConverter → PathGeometry, no external lib) |
 | MVVM | CommunityToolkit.Mvvm 8.4.0 |
 | DI container | Microsoft.Extensions.DependencyInjection 8.0.0 + `Ioc.Default` |
 | Drive data | WMI — Microsoft.Management.Infrastructure 3.0.0 (MI API) |
-| Persistence | EF Core 7.0.20 + SQLite |
+| Persistence | EF Core 8.0.0 + SQLite |
 | Notifications | Microsoft.Toolkit.Uwp.Notifications 7.1.3 |
 | Logging | Serilog 4.2.0 + Serilog.Sinks.File 6.0.0 |
 
@@ -42,7 +42,6 @@ A WPF desktop demo application for real-time Windows drive detection and monitor
 |---|---|
 | `CommunityToolkit.Mvvm` | 8.4.0 |
 | `MahApps.Metro` | 2.4.10 |
-| `LiveChartsCore.SkiaSharpView.WPF` | 2.0.4 |
 | `Microsoft.EntityFrameworkCore.Sqlite` | 8.0.0 |
 | `Microsoft.EntityFrameworkCore.Tools` | 8.0.0 |
 | `Microsoft.Extensions.DependencyInjection` | 8.0.0 |
