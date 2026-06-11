@@ -79,7 +79,7 @@ public partial class DriveDashboardViewModel : ObservableObject
                 {
                     Values              = [free],
                     Name                = "Free",
-                    Fill                = new SolidColorPaint(new SKColor(0x2A, 0x2A, 0x4A)),
+                    Fill                = new SolidColorPaint(new SKColor(0x4E, 0xC9, 0xB0)),
                     InnerRadius         = 52,
                     MaxRadialColumnWidth = 28,
                     DataLabelsSize      = 0,

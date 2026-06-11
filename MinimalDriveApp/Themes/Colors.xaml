@@ -2,9 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- ── Background surfaces ── -->
-    <Color x:Key="Color.Background.Window">#12121E</Color>
-    <Color x:Key="Color.Background.Card">#1E1E36</Color>
-    <Color x:Key="Color.Background.Ring">#2A2A4A</Color>
+    <Color x:Key="Color.Background.Window">#1E1E1E</Color>
+    <Color x:Key="Color.Background.Card">#2D2D2D</Color>
+    <Color x:Key="Color.Background.Ring">#3A3A3A</Color>
 
     <SolidColorBrush x:Key="Brush.Background.Window" Color="{StaticResource Color.Background.Window}"/>
     <SolidColorBrush x:Key="Brush.Background.Card"   Color="{StaticResource Color.Background.Card}"/>
@@ -15,10 +15,10 @@
     <SolidColorBrush x:Key="Brush.Accent.Blue" Color="{StaticResource Color.Accent.Blue}"/>
 
     <!-- ── Text ── -->
-    <Color x:Key="Color.Text.Primary">#FFFFFF</Color>
-    <Color x:Key="Color.Text.Secondary">#CCCCDD</Color>
-    <Color x:Key="Color.Text.Muted">#6666AA</Color>
-    <Color x:Key="Color.Text.Faint">#44446A</Color>
+    <Color x:Key="Color.Text.Primary">#F0F0F0</Color>
+    <Color x:Key="Color.Text.Secondary">#CCCCCC</Color>
+    <Color x:Key="Color.Text.Muted">#888888</Color>
+    <Color x:Key="Color.Text.Faint">#555555</Color>
 
     <SolidColorBrush x:Key="Brush.Text.Primary"   Color="{StaticResource Color.Text.Primary}"/>
     <SolidColorBrush x:Key="Brush.Text.Secondary" Color="{StaticResource Color.Text.Secondary}"/>
@@ -28,7 +28,7 @@
     <!-- ── Stat tile values ── -->
     <SolidColorBrush x:Key="Brush.Stat.Used"     Color="{StaticResource Color.Accent.Blue}"/>
     <SolidColorBrush x:Key="Brush.Stat.Free"     Color="#4EC9B0"/>
-    <SolidColorBrush x:Key="Brush.Stat.Capacity" Color="#888899"/>
+    <SolidColorBrush x:Key="Brush.Stat.Capacity" Color="#888888"/>
 
     <!-- ── Status / health ── -->
     <SolidColorBrush x:Key="Brush.Status.Ok"      Color="#10B981"/>
@@ -37,5 +37,11 @@
     <!-- ── DataGrid row highlights ── -->
     <SolidColorBrush x:Key="Brush.Row.HealthWarning"  Color="#CC6000"/>
     <SolidColorBrush x:Key="Brush.Row.OutdatedBackup" Color="#7A7000"/>
+
+    <!-- ── DataGrid ── -->
+    <SolidColorBrush x:Key="Brush.DataGrid.Header"       Color="#252525"/>
+    <SolidColorBrush x:Key="Brush.DataGrid.Border"       Color="#3A3A3A"/>
+    <SolidColorBrush x:Key="Brush.DataGrid.RowAlt"       Color="#252525"/>
+    <SolidColorBrush x:Key="Brush.DataGrid.RowSelected"  Color="#094771"/>
 
 </ResourceDictionary>

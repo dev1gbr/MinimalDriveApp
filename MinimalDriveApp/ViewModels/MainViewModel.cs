@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using MinimalDriveApp.Data;
 using MinimalDriveApp.Models;
@@ -21,7 +22,16 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private DriveInfo? _selectedDrive;
 
+    [ObservableProperty]
+    private bool _isDashboardVisible = true;
+
     public DriveDashboardViewModel Dashboard { get; } = new();
+
+    [RelayCommand]
+    private void Refresh() => LoadDrives();
+
+    [RelayCommand]
+    private void SetUpDrive() { /* placeholder — future task */ }
 
     partial void OnSelectedDriveChanged(DriveInfo? value)
     {

@@ -1,14 +1,12 @@
 <Application x:Class="MinimalDriveApp.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:views="clr-namespace:MinimalDriveApp.Views">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!-- WPF-UI Fluent design system -->
-                <ui:ThemesDictionary Theme="Dark"/>
-                <ui:ControlsDictionary/>
+                <!-- Fluent.Ribbon — dark theme applied in App.xaml.cs via ControlzEx ThemeManager -->
+                <ResourceDictionary Source="pack://application:,,,/Fluent;component/Themes/Generic.xaml"/>
                 <!-- App theme — colors, typography, spacing, control styles -->
                 <ResourceDictionary Source="pack://application:,,,/MinimalDriveApp;component/Themes/Theme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
