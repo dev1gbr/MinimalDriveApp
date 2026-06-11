@@ -9,7 +9,6 @@ using Serilog;
 using System.IO;
 using System.Windows;
 using ControlzEx.Theming;
-using Wpf.Ui.Appearance;
 
 namespace MinimalDriveApp;
 
@@ -19,8 +18,7 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
-        ApplicationThemeManager.Apply(ApplicationTheme.Dark);
-        ThemeManager.Current.ChangeTheme(this, "Dark.Steel");
+        ThemeManager.Current.ChangeTheme(this, "Dark.Blue");
 
         var logPath = Path.Combine(
             AppDomain.CurrentDomain.BaseDirectory, "logs", "app-.log");
