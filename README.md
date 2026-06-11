@@ -4,8 +4,16 @@ A WPF desktop demo application for real-time Windows drive detection and monitor
 
 ## Screenshots
 
-### Drive list with SQLite schema
-![Drive list and SQLite database](Doc/app+sqlite-browser.png)
+### Application — drive list with dashboard panel
+![Application with drive list and dashboard](Doc/app.png)
+
+### SQLite database — known drives table
+<table>
+<tr>
+<td><img src="Doc/db-browser1.png" alt="DB Browser — known drives table"/></td>
+<td><img src="Doc/db-browser2.png" alt="DB Browser — drive details"/></td>
+</tr>
+</table>
 
 ### Hot-plug detection and toast notification
 ![Hot-plug detection and new drive toast](Doc/notification.png)
@@ -27,7 +35,7 @@ A WPF desktop demo application for real-time Windows drive detection and monitor
 | Layer | Technology |
 |---|---|
 | UI framework | WPF (.NET 8, `net8.0-windows10.0.17763.0`) |
-| UI theme | WPF-UI 4.3.0 — Windows 11 Fluent dark theme (`ApplicationThemeManager`) |
+| UI theme | Fluent.Ribbon 11.0.0 + ControlzEx 6.x — `Dark.Steel` theme via `ThemeManager` |
 | Ribbon | Fluent.Ribbon 11.0.0 — `RibbonWindow` with Drive tab (Refresh, Set Up Drive, Dashboard toggle) |
 | Donut chart | LiveChartsCore.SkiaSharpView.WPF 2.1.0-dev-570 — `PieChart` with `PieSeries<double>` |
 | MVVM | CommunityToolkit.Mvvm 8.4.0 |
@@ -44,7 +52,6 @@ A WPF desktop demo application for real-time Windows drive detection and monitor
 | `CommunityToolkit.Mvvm` | 8.4.0 |
 | `Fluent.Ribbon` | 11.0.0 |
 | `LiveChartsCore.SkiaSharpView.WPF` | 2.1.0-dev-570 |
-| `WPF-UI` | 4.3.0 |
 | `Microsoft.EntityFrameworkCore.Sqlite` | 8.0.0 |
 | `Microsoft.EntityFrameworkCore.Tools` | 8.0.0 |
 | `Microsoft.Extensions.DependencyInjection` | 8.0.0 |
@@ -64,8 +71,8 @@ MinimalDriveApp/
 ├── ViewModels/      # MainViewModel, DriveDashboardViewModel
 ├── Views/           # DriveDashboardView UserControl, Converters
 ├── Themes/          # Global ResourceDictionary — Colors, Typography, Spacing, Controls, Theme (entry-point)
-├── App.xaml.cs      # DI setup, Serilog init, WPF-UI dark theme + Themes/Theme.xaml
-├── MainWindow.xaml  # FluentWindow — DataGrid (top) + Dashboard panel (bottom)
+├── App.xaml.cs      # DI setup, Serilog init, ControlzEx Dark.Steel theme + Themes/Theme.xaml
+├── MainWindow.xaml  # RibbonWindow — Ribbon + DataGrid (top) + GridSplitter + Dashboard panel (bottom)
 └── Migrations/      # EF Core migrations
 ```
 
