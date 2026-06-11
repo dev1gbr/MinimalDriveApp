@@ -1,8 +1,8 @@
-using Wpf.Ui.Controls;
+using Fluent;
 
 namespace MinimalDriveApp;
 
-public partial class MainWindow : FluentWindow
+public partial class MainWindow : RibbonWindow
 {
     public MainWindow()
     {

@@ -9,6 +9,8 @@
                 <!-- WPF-UI Fluent design system -->
                 <ui:ThemesDictionary Theme="Dark"/>
                 <ui:ControlsDictionary/>
+                <!-- Fluent.Ribbon -->
+                <ResourceDictionary Source="pack://application:,,,/Fluent;component/Themes/Generic.xaml"/>
                 <!-- App theme — colors, typography, spacing, control styles -->
                 <ResourceDictionary Source="pack://application:,,,/MinimalDriveApp;component/Themes/Theme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
