@@ -1,6 +1,10 @@
 using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
 using MinimalDriveApp.Models;
+using SkiaSharp;
 
 namespace MinimalDriveApp.ViewModels;
 
@@ -18,8 +22,7 @@ public partial class DriveDashboardViewModel : ObservableObject
         nameof(HealthStatus),
         nameof(HealthIcon),
         nameof(StatusLabel),
-        nameof(Capacity),
-        nameof(UsedSpace),
+        nameof(DonutSeries),
         nameof(CapacityFormatted),
         nameof(UsedSpaceFormatted),
         nameof(FreeSpaceFormatted),
@@ -50,9 +53,41 @@ public partial class DriveDashboardViewModel : ObservableObject
         _                                 => "—"
     };
 
-    // Raw values exposed so XAML MultiBinding can feed both into DonutArcConverter
-    public long Capacity  => Drive?.Capacity  ?? 0;
-    public long UsedSpace => Drive?.UsedSpace ?? 0;
+    public ISeries[] DonutSeries
+    {
+        get
+        {
+            double used  = Drive?.UsedSpace ?? 0;
+            double free  = Drive is not null && Drive.Capacity > 0
+                               ? Drive.Capacity - Drive.UsedSpace
+                               : 1;
+            if (Drive is null) used = 0;
+
+            return
+            [
+                new PieSeries<double>
+                {
+                    Values              = [used],
+                    Name                = "Used",
+                    Fill                = new SolidColorPaint(new SKColor(0x00, 0x78, 0xD4)),
+                    InnerRadius         = 52,
+                    MaxRadialColumnWidth = 28,
+                    DataLabelsSize      = 0,
+                    ToolTipLabelFormatter = p => FormatBytes((long)p.Model)
+                },
+                new PieSeries<double>
+                {
+                    Values              = [free],
+                    Name                = "Free",
+                    Fill                = new SolidColorPaint(new SKColor(0x2A, 0x2A, 0x4A)),
+                    InnerRadius         = 52,
+                    MaxRadialColumnWidth = 28,
+                    DataLabelsSize      = 0,
+                    ToolTipLabelFormatter = p => FormatBytes((long)p.Model)
+                }
+            ];
+        }
+    }
 
     public string CapacityFormatted    => FormatBytes(Drive?.Capacity   ?? 0);
     public string UsedSpaceFormatted   => FormatBytes(Drive?.UsedSpace  ?? 0);
