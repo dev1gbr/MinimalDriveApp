@@ -12,6 +12,10 @@
     <fluent:RibbonWindow.Resources>
         <views:BytesToGbConverter x:Key="BytesToGb" />
         <views:NullableDateConverter x:Key="NullableDate" />
+        <!-- Hide the Quick Access Toolbar completely -->
+        <Style TargetType="fluent:QuickAccessToolBar">
+            <Setter Property="Visibility" Value="Collapsed"/>
+        </Style>
     </fluent:RibbonWindow.Resources>
 
     <DockPanel>
@@ -97,7 +101,9 @@
             <!-- ── Bottom: Drive Dashboard panel ── -->
             <views:DriveDashboardView Grid.Row="1"
                                       DataContext="{Binding Dashboard}"
-                                      Visibility="{Binding IsDashboardVisible, Converter={StaticResource BoolToVis}}"/>
+                                      Visibility="{Binding DataContext.IsDashboardVisible,
+                                                   RelativeSource={RelativeSource AncestorType=Window},
+                                                   Converter={StaticResource BoolToVis}}"/>
         </Grid>
     </DockPanel>
 </fluent:RibbonWindow>
