@@ -17,22 +17,11 @@ public partial class MainWindow : RibbonWindow
         var qat = FindVisualChild<QuickAccessToolBar>(this);
         if (qat is null) return;
 
-        // Walk up from QAT until we reach a direct child of the Ribbon control —
-        // that's the container row that holds the entire QAT strip.
-        DependencyObject current = qat;
-        while (current is not null)
-        {
-            var parent = VisualTreeHelper.GetParent(current);
-            if (parent is Fluent.Ribbon && current is UIElement container)
-            {
-                container.Visibility = Visibility.Collapsed;
-                return;
-            }
-            current = parent;
-        }
-
-        // Fallback: at least hide the control itself
         qat.Visibility = Visibility.Collapsed;
+
+        // Also collapse the immediate parent container (the row/border wrapping the QAT strip)
+        if (VisualTreeHelper.GetParent(qat) is UIElement directParent)
+            directParent.Visibility = Visibility.Collapsed;
     }
 
     private static T? FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
