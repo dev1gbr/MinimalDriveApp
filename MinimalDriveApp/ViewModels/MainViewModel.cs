@@ -18,6 +18,16 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<DriveInfo> _drives = new();
 
+    [ObservableProperty]
+    private DriveInfo? _selectedDrive;
+
+    public DriveDashboardViewModel Dashboard { get; } = new();
+
+    partial void OnSelectedDriveChanged(DriveInfo? value)
+    {
+        Dashboard.Drive = value;
+    }
+
     public MainViewModel(
         IDriveDetectionService detection,
         IDriveRepository repository,
