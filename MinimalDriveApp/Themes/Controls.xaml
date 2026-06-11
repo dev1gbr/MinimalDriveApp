@@ -1,0 +1,45 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ── Card border ── -->
+    <Style x:Key="Style.Card" TargetType="Border">
+        <Setter Property="Background"   Value="{DynamicResource Brush.Background.Card}"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource Spacing.Card.CornerRadius}"/>
+        <Setter Property="Padding"      Value="{DynamicResource Spacing.Card.Padding}"/>
+    </Style>
+
+    <!-- ── Muted section label (e.g. "Used Space") ── -->
+    <Style x:Key="Style.Label.Muted" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Muted}"/>
+        <Setter Property="FontSize"   Value="{DynamicResource Font.Size.Small}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Font.Family.Default}"/>
+        <Setter Property="Margin"     Value="{DynamicResource Spacing.MutedLabel.Margin}"/>
+    </Style>
+
+    <!-- ── Large metric value (e.g. "128.4 GB") ── -->
+    <Style x:Key="Style.Value.Metric" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Primary}"/>
+        <Setter Property="FontSize"   Value="{DynamicResource Font.Size.Metric}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="FontFamily" Value="{DynamicResource Font.Family.Default}"/>
+    </Style>
+
+    <!-- ── Detail row label (left column, e.g. "Health") ── -->
+    <Style x:Key="Style.Label.Detail" TargetType="TextBlock">
+        <Setter Property="Foreground"        Value="{DynamicResource Brush.Text.Muted}"/>
+        <Setter Property="FontSize"          Value="{DynamicResource Font.Size.Small}"/>
+        <Setter Property="FontFamily"        Value="{DynamicResource Font.Family.Default}"/>
+        <Setter Property="Margin"            Value="{DynamicResource Spacing.Detail.Label.Margin}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <!-- ── Detail row value (right column, e.g. "OK") ── -->
+    <Style x:Key="Style.Value.Detail" TargetType="TextBlock">
+        <Setter Property="Foreground"        Value="{DynamicResource Brush.Text.Secondary}"/>
+        <Setter Property="FontSize"          Value="{DynamicResource Font.Size.Body}"/>
+        <Setter Property="FontFamily"        Value="{DynamicResource Font.Family.Default}"/>
+        <Setter Property="Margin"            Value="{DynamicResource Spacing.Detail.Value.Margin}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+</ResourceDictionary>

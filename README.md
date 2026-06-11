@@ -61,7 +61,8 @@ MinimalDriveApp/
 ├── Services/        # DriveDetectionService (WMI), HotPlugService (CIM subscription), ToastService
 ├── ViewModels/      # MainViewModel, DriveDashboardViewModel
 ├── Views/           # DriveDashboardView UserControl, Converters
-├── App.xaml.cs      # DI setup, Serilog init, MahApps Dark.Blue theme
+├── Themes/          # Global ResourceDictionary — Colors, Typography, Spacing, Controls, Theme (entry-point)
+├── App.xaml.cs      # DI setup, Serilog init, MahApps Dark.Blue theme + Themes/Theme.xaml
 ├── MainWindow.xaml  # MetroWindow — DataGrid (top) + Dashboard panel (bottom)
 └── Migrations/      # EF Core migrations
 ```

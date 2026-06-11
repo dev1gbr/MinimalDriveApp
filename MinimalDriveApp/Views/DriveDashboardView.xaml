@@ -7,58 +7,24 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              d:DesignHeight="240" d:DesignWidth="1200"
-             Background="#12121E">
+             Background="{StaticResource Brush.Background.Window}">
 
-    <UserControl.Resources>
-        <views:BoolToVisibilityConverter x:Key="BoolToVis"/>
-
-        <Style x:Key="Card" TargetType="Border">
-            <Setter Property="Background"   Value="#1E1E36"/>
-            <Setter Property="CornerRadius" Value="8"/>
-            <Setter Property="Padding"      Value="14,12"/>
-        </Style>
-
-        <Style x:Key="MutedLabel" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#6666AA"/>
-            <Setter Property="FontSize"   Value="11"/>
-            <Setter Property="FontFamily" Value="Segoe UI"/>
-            <Setter Property="Margin"     Value="0,0,0,3"/>
-        </Style>
-
-        <Style x:Key="CardValue" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#FFFFFF"/>
-            <Setter Property="FontSize"   Value="18"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="FontFamily" Value="Segoe UI"/>
-        </Style>
-
-        <Style x:Key="DetailLabel" TargetType="TextBlock">
-            <Setter Property="Foreground"        Value="#6666AA"/>
-            <Setter Property="FontSize"          Value="11"/>
-            <Setter Property="FontFamily"        Value="Segoe UI"/>
-            <Setter Property="Margin"            Value="0,0,12,6"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
-
-        <Style x:Key="DetailValue" TargetType="TextBlock">
-            <Setter Property="Foreground"        Value="#CCCCDD"/>
-            <Setter Property="FontSize"          Value="12"/>
-            <Setter Property="FontFamily"        Value="Segoe UI"/>
-            <Setter Property="Margin"            Value="0,0,0,6"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
-    </UserControl.Resources>
-
-    <Grid Margin="8,4,8,8">
+    <Grid Margin="{StaticResource Spacing.Panel.Margin}">
 
         <!-- ── Empty state ── -->
-        <Border Style="{StaticResource Card}"
+        <Border Style="{StaticResource Style.Card}"
                 Visibility="{Binding HasDrive, Converter={StaticResource BoolToVis}, ConverterParameter=Invert}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="&#xE88A;" FontFamily="Segoe MDL2 Assets" FontSize="28"
-                           Foreground="#2A2A4A" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <TextBlock Text="&#xE88A;"
+                           FontFamily="{StaticResource Font.Family.Icons}"
+                           FontSize="{StaticResource Font.Size.Icon}"
+                           Foreground="{StaticResource Brush.Background.Ring}"
+                           VerticalAlignment="Center"
+                           Margin="{StaticResource Spacing.Icon.MarginRight}"/>
                 <TextBlock Text="Select a drive above to view its details"
-                           Foreground="#44446A" FontSize="13" FontFamily="Segoe UI"
+                           Foreground="{StaticResource Brush.Text.Faint}"
+                           FontSize="{StaticResource Font.Size.Subtitle}"
+                           FontFamily="{StaticResource Font.Family.Default}"
                            VerticalAlignment="Center"/>
             </StackPanel>
         </Border>
@@ -72,20 +38,27 @@
             </Grid.ColumnDefinitions>
 
             <!-- ── Col 0: Header + Donut ── -->
-            <Border Grid.Column="0" Style="{StaticResource Card}" Margin="0,0,6,0">
+            <Border Grid.Column="0" Style="{StaticResource Style.Card}"
+                    Margin="{StaticResource Spacing.Column.GapRight}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0" Margin="0,0,0,4">
+                    <StackPanel Grid.Row="0" Margin="{StaticResource Spacing.Header.Margin}">
                         <TextBlock Text="{Binding HeaderTitle}"
-                                   Foreground="#FFFFFF" FontSize="15" FontWeight="Bold"
-                                   FontFamily="Segoe UI" TextTrimming="CharacterEllipsis"/>
+                                   Foreground="{StaticResource Brush.Text.Primary}"
+                                   FontSize="{StaticResource Font.Size.Title}"
+                                   FontWeight="Bold"
+                                   FontFamily="{StaticResource Font.Family.Default}"
+                                   TextTrimming="CharacterEllipsis"/>
                         <TextBlock Text="{Binding HeaderSubtitle}"
-                                   Foreground="#6666AA" FontSize="10" FontFamily="Segoe UI"
-                                   Margin="0,3,0,0" TextTrimming="CharacterEllipsis"/>
+                                   Foreground="{StaticResource Brush.Text.Muted}"
+                                   FontSize="{StaticResource Font.Size.XSmall}"
+                                   FontFamily="{StaticResource Font.Family.Default}"
+                                   Margin="{StaticResource Spacing.Subtitle.Margin}"
+                                   TextTrimming="CharacterEllipsis"/>
                     </StackPanel>
 
                     <!-- LiveCharts2 donut chart -->
@@ -96,55 +69,63 @@
                                       AnimationsSpeed="0:0:0.4"
                                       Background="Transparent"
                                       IsHitTestVisible="False"/>
-                        <!-- centre label overlay -->
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock Text="{Binding UsedPercentFormatted}"
-                                       Foreground="#FFFFFF" FontSize="22" FontWeight="Bold"
-                                       FontFamily="Segoe UI" TextAlignment="Center"/>
-                            <TextBlock Text="used" Foreground="#6666AA" FontSize="10"
-                                       FontFamily="Segoe UI" TextAlignment="Center"/>
+                                       Foreground="{StaticResource Brush.Text.Primary}"
+                                       FontSize="{StaticResource Font.Size.MetricLarge}"
+                                       FontWeight="Bold"
+                                       FontFamily="{StaticResource Font.Family.Default}"
+                                       TextAlignment="Center"/>
+                            <TextBlock Text="used"
+                                       Foreground="{StaticResource Brush.Text.Muted}"
+                                       FontSize="{StaticResource Font.Size.XSmall}"
+                                       FontFamily="{StaticResource Font.Family.Default}"
+                                       TextAlignment="Center"/>
                         </StackPanel>
                     </Grid>
                 </Grid>
             </Border>
 
             <!-- ── Col 1: Stat tiles ── -->
-            <Grid Grid.Column="1" Margin="0,0,6,0">
+            <Grid Grid.Column="1" Margin="{StaticResource Spacing.Column.GapRight}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="6"/>
+                    <RowDefinition Height="{StaticResource Spacing.Tile.Gap}"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="6"/>
+                    <RowDefinition Height="{StaticResource Spacing.Tile.Gap}"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Border Grid.Row="0" Style="{StaticResource Card}">
+                <Border Grid.Row="0" Style="{StaticResource Style.Card}">
                     <StackPanel>
-                        <TextBlock Style="{StaticResource MutedLabel}" Text="Used Space"/>
-                        <TextBlock Style="{StaticResource CardValue}" Text="{Binding UsedSpaceFormatted}"
-                                   Foreground="#0078D4"/>
+                        <TextBlock Style="{StaticResource Style.Label.Muted}" Text="Used Space"/>
+                        <TextBlock Style="{StaticResource Style.Value.Metric}"
+                                   Text="{Binding UsedSpaceFormatted}"
+                                   Foreground="{StaticResource Brush.Stat.Used}"/>
                     </StackPanel>
                 </Border>
 
-                <Border Grid.Row="2" Style="{StaticResource Card}">
+                <Border Grid.Row="2" Style="{StaticResource Style.Card}">
                     <StackPanel>
-                        <TextBlock Style="{StaticResource MutedLabel}" Text="Free Space"/>
-                        <TextBlock Style="{StaticResource CardValue}" Text="{Binding FreeSpaceFormatted}"
-                                   Foreground="#4EC9B0"/>
+                        <TextBlock Style="{StaticResource Style.Label.Muted}" Text="Free Space"/>
+                        <TextBlock Style="{StaticResource Style.Value.Metric}"
+                                   Text="{Binding FreeSpaceFormatted}"
+                                   Foreground="{StaticResource Brush.Stat.Free}"/>
                     </StackPanel>
                 </Border>
 
-                <Border Grid.Row="4" Style="{StaticResource Card}">
+                <Border Grid.Row="4" Style="{StaticResource Style.Card}">
                     <StackPanel>
-                        <TextBlock Style="{StaticResource MutedLabel}" Text="Total Capacity"/>
-                        <TextBlock Style="{StaticResource CardValue}" Text="{Binding CapacityFormatted}"
-                                   Foreground="#888899"/>
+                        <TextBlock Style="{StaticResource Style.Label.Muted}" Text="Total Capacity"/>
+                        <TextBlock Style="{StaticResource Style.Value.Metric}"
+                                   Text="{Binding CapacityFormatted}"
+                                   Foreground="{StaticResource Brush.Stat.Capacity}"/>
                     </StackPanel>
                 </Border>
             </Grid>
 
             <!-- ── Col 2: Details ── -->
-            <Border Grid.Column="2" Style="{StaticResource Card}">
+            <Border Grid.Column="2" Style="{StaticResource Style.Card}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -161,43 +142,49 @@
                     </Grid.RowDefinitions>
 
                     <!-- Health -->
-                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource DetailLabel}" Text="Health"/>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource Style.Label.Detail}" Text="Health"/>
                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-                        <TextBlock Text="{Binding HealthIcon}" FontSize="11" Margin="0,0,5,6" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding HealthIcon}"
+                                   FontSize="{StaticResource Font.Size.Small}"
+                                   Margin="{StaticResource Spacing.HealthIcon.Margin}"
+                                   VerticalAlignment="Center">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
-                                    <Setter Property="Foreground" Value="#10B981"/>
+                                    <Setter Property="Foreground" Value="{StaticResource Brush.Status.Ok}"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsHealthOk}" Value="False">
-                                            <Setter Property="Foreground" Value="#FF8C00"/>
+                                            <Setter Property="Foreground" Value="{StaticResource Brush.Status.Warning}"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <TextBlock Style="{StaticResource DetailValue}" Text="{Binding HealthStatus}" VerticalAlignment="Center"/>
+                        <TextBlock Style="{StaticResource Style.Value.Detail}"
+                                   Text="{Binding HealthStatus}"
+                                   VerticalAlignment="Center"/>
                     </StackPanel>
 
                     <!-- Status -->
-                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource DetailLabel}" Text="Status"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource DetailValue}" Text="{Binding StatusLabel}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource Style.Label.Detail}" Text="Status"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource Style.Value.Detail}" Text="{Binding StatusLabel}"/>
 
                     <!-- Serial -->
-                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource DetailLabel}" Text="Serial"/>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource DetailValue}"
-                               Text="{Binding SerialNumber}" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource Style.Label.Detail}" Text="Serial"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource Style.Value.Detail}"
+                               Text="{Binding SerialNumber}"
+                               TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
 
                     <!-- Connection -->
-                    <TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource DetailLabel}" Text="Connection"/>
-                    <TextBlock Grid.Row="0" Grid.Column="4" Style="{StaticResource DetailValue}" Text="{Binding ConnectionType}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="3" Style="{StaticResource Style.Label.Detail}" Text="Connection"/>
+                    <TextBlock Grid.Row="0" Grid.Column="4" Style="{StaticResource Style.Value.Detail}" Text="{Binding ConnectionType}"/>
 
                     <!-- File System -->
-                    <TextBlock Grid.Row="1" Grid.Column="3" Style="{StaticResource DetailLabel}" Text="File System"/>
-                    <TextBlock Grid.Row="1" Grid.Column="4" Style="{StaticResource DetailValue}" Text="{Binding FileSystem}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="3" Style="{StaticResource Style.Label.Detail}" Text="File System"/>
+                    <TextBlock Grid.Row="1" Grid.Column="4" Style="{StaticResource Style.Value.Detail}" Text="{Binding FileSystem}"/>
 
                     <!-- Drive Type -->
-                    <TextBlock Grid.Row="2" Grid.Column="3" Style="{StaticResource DetailLabel}" Text="Drive Type"/>
-                    <TextBlock Grid.Row="2" Grid.Column="4" Style="{StaticResource DetailValue}" Text="{Binding DriveType}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="3" Style="{StaticResource Style.Label.Detail}" Text="Drive Type"/>
+                    <TextBlock Grid.Row="2" Grid.Column="4" Style="{StaticResource Style.Value.Detail}" Text="{Binding DriveType}"/>
                 </Grid>
             </Border>
         </Grid>
