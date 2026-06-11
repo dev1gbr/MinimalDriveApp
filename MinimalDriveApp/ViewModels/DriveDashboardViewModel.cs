@@ -1,5 +1,9 @@
 using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using SkiaSharp;
 using MinimalDriveApp.Models;
 
 namespace MinimalDriveApp.ViewModels;
@@ -24,7 +28,8 @@ public partial class DriveDashboardViewModel : ObservableObject
         nameof(UsedSpaceFormatted),
         nameof(FreeSpaceFormatted),
         nameof(UsedPercentFormatted),
-        nameof(IsHealthOk))]
+        nameof(IsHealthOk),
+        nameof(DonutSeries))]
     private DriveInfo? _drive;
 
     public bool HasDrive => Drive is not null;
@@ -69,6 +74,49 @@ public partial class DriveDashboardViewModel : ObservableObject
     }
 
     public bool IsHealthOk => !(Drive?.IsHealthWarning ?? false);
+
+    public IEnumerable<ISeries> DonutSeries
+    {
+        get
+        {
+            if (Drive is null || Drive.Capacity <= 0)
+            {
+                return new[]
+                {
+                    new PieSeries<double>
+                    {
+                        Values         = new[] { 1.0 },
+                        Fill           = new SolidColorPaint(new SKColor(0x2A, 0x2A, 0x4A)),
+                        Stroke         = null,
+                        InnerRadius    = 50,
+                        RelativeOuterRadius = 1
+                    }
+                };
+            }
+
+            return new ISeries[]
+            {
+                new PieSeries<double>
+                {
+                    Values         = new[] { (double)Drive.UsedSpace },
+                    Fill           = new SolidColorPaint(new SKColor(0x00, 0x78, 0xD4)),
+                    Stroke         = null,
+                    InnerRadius    = 50,
+                    RelativeOuterRadius = 1,
+                    Name           = "Used"
+                },
+                new PieSeries<double>
+                {
+                    Values         = new[] { (double)Drive.FreeSpace },
+                    Fill           = new SolidColorPaint(new SKColor(0x2A, 0x2A, 0x4A)),
+                    Stroke         = null,
+                    InnerRadius    = 50,
+                    RelativeOuterRadius = 1,
+                    Name           = "Free"
+                }
+            };
+        }
+    }
 
     internal static string FormatBytes(long bytes)
     {

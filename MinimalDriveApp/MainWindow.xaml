@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:MinimalDriveApp.Views"
         mc:Ignorable="d"
-        Title="ArchiveStack Manager" Height="620" Width="1440"
+        Title="ArchiveStack Manager" Height="760" Width="1280"
         Background="#12121E"
         TitleCharacterCasing="Normal">
 
@@ -16,15 +16,15 @@
     </mah:MetroWindow.Resources>
 
     <Grid>
-        <Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
             <!-- Drive table -->
-            <ColumnDefinition Width="*"/>
-            <!-- Dashboard panel — fixed width -->
-            <ColumnDefinition Width="360"/>
-        </Grid.ColumnDefinitions>
+            <RowDefinition Height="*"/>
+            <!-- Dashboard panel -->
+            <RowDefinition Height="240"/>
+        </Grid.RowDefinitions>
 
-        <!-- ── Left: Drive DataGrid ── -->
-        <DataGrid Grid.Column="0"
+        <!-- ── Top: Drive DataGrid ── -->
+        <DataGrid Grid.Row="0"
                   ItemsSource="{Binding Drives}"
                   SelectedItem="{Binding SelectedDrive, Mode=TwoWay}"
                   AutoGenerateColumns="False"
@@ -33,7 +33,7 @@
                   GridLinesVisibility="Horizontal"
                   HeadersVisibility="Column"
                   SelectionMode="Single"
-                  Margin="8,8,4,8">
+                  Margin="8,8,8,4">
 
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
@@ -102,9 +102,8 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- ── Right: Drive Dashboard panel ── -->
-        <views:DriveDashboardView Grid.Column="1"
-                                  DataContext="{Binding Dashboard}"
-                                  Margin="4,8,8,8"/>
+        <!-- ── Bottom: Drive Dashboard panel ── -->
+        <views:DriveDashboardView Grid.Row="1"
+                                  DataContext="{Binding Dashboard}"/>
     </Grid>
 </mah:MetroWindow>
