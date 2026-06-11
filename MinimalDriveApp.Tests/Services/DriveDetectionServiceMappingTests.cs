@@ -28,4 +28,18 @@ public class DriveDetectionServiceMappingTests
     {
         Assert.Equal(expected, DriveDetectionService.MapConnectionType(interfaceType));
     }
+
+    [Theory]
+    [InlineData("USB", "", "Removable")]
+    [InlineData("usb", "", "Removable")]
+    [InlineData("SCSI", "", "Fixed")]
+    [InlineData("IDE", "", "Fixed")]
+    [InlineData("NVME", "", "Fixed")]
+    [InlineData("", "Removable Media", "Removable")]
+    [InlineData("", "Fixed hard disk media", "Fixed")]
+    [InlineData("", "", "Unknown")]
+    public void MapDriveTypeFromMedia_ReturnsExpectedLabel(string interfaceType, string mediaType, string expected)
+    {
+        Assert.Equal(expected, DriveDetectionService.MapDriveTypeFromMedia(mediaType, interfaceType));
+    }
 }
