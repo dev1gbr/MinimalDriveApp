@@ -33,6 +33,7 @@ public class MainViewModelTests
     public void LoadDrives_AssignsBrandNewNeverSeen_WhenSerialNotInDb()
     {
         var (vm, _, repo, _) = Build(new[] { MakeDrive("SN-NEW") });
+        // both calls to GetBySerial return null — drive was never seen
         repo.Setup(r => r.GetBySerial("SN-NEW")).Returns((KnownDrive?)null);
 
         vm.Initialize();
@@ -45,6 +46,7 @@ public class MainViewModelTests
     public void LoadDrives_AssignsPreviouslySeenUnnamed_WhenUserNameIsNull()
     {
         var (vm, _, repo, _) = Build(new[] { MakeDrive("SN-OLD") });
+        // pre-existing record present (UserName null) — both calls return it
         repo.Setup(r => r.GetBySerial("SN-OLD"))
             .Returns(new KnownDrive { SerialNumber = "SN-OLD", UserName = null });
 
@@ -84,7 +86,10 @@ public class MainViewModelTests
     {
         var newDrive = MakeDrive("SN-HOT");
         var (vm, detection, repo, hotPlug) = Build();
-        repo.Setup(r => r.GetBySerial("SN-HOT")).Returns((KnownDrive?)null);
+        // first call (pre-upsert check) → null; second call (post-upsert) → inserted record
+        repo.SetupSequence(r => r.GetBySerial("SN-HOT"))
+            .Returns((KnownDrive?)null)
+            .Returns(new KnownDrive { SerialNumber = "SN-HOT" });
         detection.Setup(s => s.GetConnectedDrives()).Returns(new[] { newDrive }.ToList().AsReadOnly());
 
         vm.Initialize();
